@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,6 +32,10 @@ namespace SuperliminalPracticeMod
 		bool triggersVisible;
 		List<GameObject> triggerGameObjects;
 
+		bool isHider;
+		float hiderTime;
+		bool namesVisible;
+
 
 		void Awake()
 		{
@@ -48,12 +53,16 @@ namespace SuperliminalPracticeMod
 			debugFunctions = false;
 			GameManager.GM.GetComponent<LevelInformation>().LevelInfo.RandomLoadingScreens = new SceneReference[1] { GameManager.GM.GetComponent<LevelInformation>().LevelInfo.NormalLoadingScreen };
 			base.gameObject.AddComponent<SLPMod_Console>();
+
+			isHider = false;
+			hiderTime = 0.0f;
 		}
 
 		private void OnLevelWasLoaded(int level)
 		{
 			triggerGameObjects = new List<GameObject>();
 			triggersVisible = false;
+			namesVisible = true;
 		}
 
 		public void AddTriggerGO(GameObject go)
@@ -73,6 +82,19 @@ namespace SuperliminalPracticeMod
 				gameObject.SetActive(triggersVisible);
 			}
 
+		}
+
+		public void ToggleMultiplayerNames()
+		{
+			List<GameObject> playerObjects = GameManager.GM.GetComponent<MultiplayerMode>().GetPlayerObjects();
+
+			namesVisible = !namesVisible;
+
+			foreach (GameObject x in playerObjects)
+            {
+				TMPro.TextMeshPro textMesh = x.GetComponent<MultiplayerPlayer>().TextMesh;
+				textMesh.enabled = namesVisible;
+            }
 		}
 
 		void Update()
@@ -208,10 +230,13 @@ namespace SuperliminalPracticeMod
 				TeleportPosition();
 
 			if (Input.GetKeyDown(KeyCode.F7))
-				ReloadCheckpoint();
+				isHider = !isHider;
+
+			if (isHider)
+				hiderTime += Time.deltaTime;
 
 			if (Input.GetKeyDown(KeyCode.F8))
-				RestartMap();
+				hiderTime = 0.0f;
 
 			if(Input.GetKeyDown(KeyCode.F9))
 			{
@@ -224,8 +249,8 @@ namespace SuperliminalPracticeMod
 				resizeScript.ScaleObject(1f + (Input.mouseScrollDelta.y * 0.05f));
 			}
 
-			
-
+			if (Input.GetKeyDown(KeyCode.F10))
+				ToggleMultiplayerNames();
 		}
 
 		public void SetMouseMinY(float mouseMinY)
@@ -296,6 +321,20 @@ namespace SuperliminalPracticeMod
 			Vector3 velocity = playerMotor.GetComponent<CharacterController>().velocity;
 			Vector3 rotation = playerMotor.transform.localRotation.eulerAngles;
 			float scale = playerMotor.transform.localScale.x;
+
+			string hiderInfo = "";
+
+			if (isHider)
+				hiderInfo += "\nYou are a HIDER";
+			else
+				hiderInfo += "\nYou are a SEEKER";
+
+			float seconds = hiderTime % 60.0f;
+			int minutes = (int) Math.Floor(hiderTime / 60);
+			hiderInfo += "\nTime spent hiding: ";
+			hiderInfo += minutes.ToString("0") + ":";
+			hiderInfo += seconds.ToString("00.0");
+
 			string dynamicInfo = "";
 
 			if (debugFunctions)
@@ -319,6 +358,9 @@ namespace SuperliminalPracticeMod
 			if (Time.time - this.teleportTime <= 1f)
 				dynamicInfo += "\nTeleport";
 
+			if (!namesVisible)
+				dynamicInfo += "\nNames Hidden";
+
 			return string.Concat(new object[]
 			{
 				"Position: ",
@@ -341,6 +383,8 @@ namespace SuperliminalPracticeMod
 				"\n",
 				"Vertical Velocity: ",
 				velocity.y.ToString("0.000")+" m/s",
+				"\n",
+				hiderInfo,
 				"\n",
 				dynamicInfo
 			});
