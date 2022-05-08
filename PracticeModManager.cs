@@ -35,6 +35,8 @@ namespace SuperliminalPracticeMod
 		bool isHider;
 		float hiderTime;
 		bool namesVisible;
+		bool localPlayerGrabbed;
+		bool localPlayerCloned;
 
 
 		void Awake()
@@ -56,13 +58,15 @@ namespace SuperliminalPracticeMod
 
 			isHider = false;
 			hiderTime = 0.0f;
+			namesVisible = true;
+			localPlayerGrabbed = false;
+			localPlayerCloned = false;
 		}
 
 		private void OnLevelWasLoaded(int level)
 		{
 			triggerGameObjects = new List<GameObject>();
 			triggersVisible = false;
-			namesVisible = true;
 		}
 
 		public void AddTriggerGO(GameObject go)
@@ -82,19 +86,6 @@ namespace SuperliminalPracticeMod
 				gameObject.SetActive(triggersVisible);
 			}
 
-		}
-
-		public void ToggleMultiplayerNames()
-		{
-			List<GameObject> playerObjects = GameManager.GM.GetComponent<MultiplayerMode>().GetPlayerObjects();
-
-			namesVisible = !namesVisible;
-
-			foreach (GameObject x in playerObjects)
-            {
-				TMPro.TextMeshPro textMesh = x.GetComponent<MultiplayerPlayer>().TextMesh;
-				textMesh.enabled = namesVisible;
-            }
 		}
 
 		void Update()
@@ -232,12 +223,6 @@ namespace SuperliminalPracticeMod
 			if (Input.GetKeyDown(KeyCode.F7))
 				isHider = !isHider;
 
-			if (isHider)
-				hiderTime += Time.deltaTime;
-
-			if (Input.GetKeyDown(KeyCode.F8))
-				hiderTime = 0.0f;
-
 			if(Input.GetKeyDown(KeyCode.F9))
 			{
 				debugFunctions = !debugFunctions;
@@ -250,7 +235,40 @@ namespace SuperliminalPracticeMod
 			}
 
 			if (Input.GetKeyDown(KeyCode.F10))
-				ToggleMultiplayerNames();
+				namesVisible = !namesVisible;
+
+			MultiplayerMode multiplayerMode = GameManager.GM.GetComponent<MultiplayerMode>();
+			List<GameObject> playerObjects = multiplayerMode.GetPlayerObjects();
+
+			localPlayerGrabbed = false;
+			localPlayerCloned = false;
+			foreach (GameObject playerObject in playerObjects)
+			{
+				MultiplayerPlayer multiplayerPlayer = playerObject.GetComponent<MultiplayerPlayer>();
+				TMPro.TextMeshPro textMesh = multiplayerPlayer.TextMesh;
+				textMesh.enabled = namesVisible;
+
+				if (multiplayerPlayer.IsMainLocalPlayer)
+				{
+					Photon.Realtime.Player owner = multiplayerPlayer.photonView.Owner;
+					if (multiplayerMode.GetPlayerObjectForPlayer(owner) != multiplayerPlayer.gameObject)
+						localPlayerGrabbed = true;
+				}
+				else
+				{
+					if (multiplayerPlayer.IsLocalPlayerOrCloneOf())
+						localPlayerCloned = true;
+				}
+			}
+
+			if (localPlayerGrabbed || localPlayerCloned)
+				isHider = false;
+
+			if (isHider)
+				hiderTime += Time.deltaTime;
+
+			if (Input.GetKeyDown(KeyCode.F8))
+				hiderTime = 0.0f;
 		}
 
 		public void SetMouseMinY(float mouseMinY)
@@ -334,6 +352,15 @@ namespace SuperliminalPracticeMod
 			hiderInfo += "\nTime spent hiding: ";
 			hiderInfo += minutes.ToString("0") + ":";
 			hiderInfo += seconds.ToString("00.0");
+
+			if (localPlayerGrabbed || localPlayerCloned)
+			{
+				hiderInfo += "\n";
+				if (localPlayerGrabbed)
+					hiderInfo += "\nYou're grabbed!";
+				if (localPlayerCloned)
+					hiderInfo += "\nYou're cloned!";
+			}
 
 			string dynamicInfo = "";
 
