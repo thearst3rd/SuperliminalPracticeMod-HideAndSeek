@@ -101,8 +101,10 @@ namespace SuperliminalPracticeMod
 					PracticeModManager.Instance.SetMouseMinY(mouseMinY);
 				}
 			}
-			
-
+			else if (commandArray[0].ToLower() == "showmoreinfo")
+			{
+				PracticeModManager.Instance.showMoreInfo = !PracticeModManager.Instance.showMoreInfo;
+			}
 		}
 
 		public void Toggle()

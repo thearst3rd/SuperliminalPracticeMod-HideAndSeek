@@ -21,6 +21,8 @@ namespace SuperliminalPracticeMod
 		public Text grabbedObjectText;
 		public PauseMenu pauseMenu;
 
+		public bool showMoreInfo;
+
 		Vector3 storedPosition;
 		Quaternion storedRotation;
 		float storedScale;
@@ -46,6 +48,8 @@ namespace SuperliminalPracticeMod
 			unlimitedRenderDistance = false;
 			noClipSpeed = 10.0f;
 			defaultFarClipPlane = 999f;
+
+			showMoreInfo = false;
 
 			storedPosition = Vector3.zero;
 			storedRotation = Quaternion.identity;
@@ -388,29 +392,53 @@ namespace SuperliminalPracticeMod
 			if (!namesVisible)
 				dynamicInfo += "\nNames Hidden";
 
-			return string.Concat(new object[]
+			String output = "Superliminal Hide and Seek\n\n";
+
+			if (showMoreInfo)
 			{
-				"Position: ",
-				position.x.ToString("0.000"),
-				", ",
-				position.y.ToString("0.000"),
-				", ",
-				position.z.ToString("0.000"),
-				"\n",
-				"Rotation: ",
-				playerCamera.transform.rotation.eulerAngles.x.ToString("0.000"),
-				", ",
-				rotation.y.ToString("0.000"),
-				"\n",
+				output = string.Concat(new object[]
+				{
+					output,
+					"Position: ",
+					position.x.ToString("0.000"),
+					", ",
+					position.y.ToString("0.000"),
+					", ",
+					position.z.ToString("0.000"),
+					"\n",
+					"Rotation: ",
+					playerCamera.transform.rotation.eulerAngles.x.ToString("0.000"),
+					", ",
+					rotation.y.ToString("0.000"),
+					"\n",
+				});
+			}
+
+			output = string.Concat(new object[]
+			{
+				output,
 				"Scale: ",
 				scale.ToString("0.0000")+"x",
 				"\n",
-				"Horizontal Velocity: ",
-				Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z).ToString("0.000")+" m/s",
-				"\n",
-				"Vertical Velocity: ",
-				velocity.y.ToString("0.000")+" m/s",
-				"\n",
+			});
+
+			if (showMoreInfo)
+			{
+				output = string.Concat(new object[]
+				{
+					output,
+					"Horizontal Velocity: ",
+					Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z).ToString("0.000")+" m/s",
+					"\n",
+					"Vertical Velocity: ",
+					velocity.y.ToString("0.000")+" m/s",
+					"\n"
+				});
+			}
+
+			return string.Concat(new object[]
+			{
+				output,
 				hiderInfo,
 				"\n",
 				dynamicInfo
@@ -419,7 +447,7 @@ namespace SuperliminalPracticeMod
 
 		string GetGrabbedObjectTextString()
 		{
-			if(resizeScript.isGrabbing && resizeScript.GetGrabbedObject() != null)
+			if(showMoreInfo && resizeScript.isGrabbing && resizeScript.GetGrabbedObject() != null)
 			{
 				GameObject grabbedObject = resizeScript.GetGrabbedObject();
 				string output = string.Concat(new object[]{
