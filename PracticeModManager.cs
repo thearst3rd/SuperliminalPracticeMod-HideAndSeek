@@ -40,6 +40,9 @@ namespace SuperliminalPracticeMod
 		bool localPlayerGrabbed;
 		bool localPlayerCloned;
 
+		int currentLevelIndex;
+		bool canTeleport;
+
 
 		void Awake()
 		{
@@ -71,6 +74,11 @@ namespace SuperliminalPracticeMod
 		{
 			triggerGameObjects = new List<GameObject>();
 			triggersVisible = false;
+
+			LevelInfo levelInfo = GameManager.GM.GetComponent<LevelInformation>().LevelInfo;
+
+			currentLevelIndex = levelInfo.GetLevelIndex(levelInfo.GetCurrentSceneSaveName());
+			canTeleport = false;
 		}
 
 		public void AddTriggerGO(GameObject go)
@@ -271,8 +279,20 @@ namespace SuperliminalPracticeMod
 			if (isHider)
 				hiderTime += Time.deltaTime;
 
-			if (Input.GetKeyDown(KeyCode.F8))
-				hiderTime = 0.0f;
+			Vector3 teleportPoint = new Vector3(81.2f, 0, -100);
+			Vector3 destinationPoint = new Vector3(115, 0, -140.7f);
+			float radius = 3.0f;
+
+			canTeleport = false;
+			if (currentLevelIndex == 4)
+			{
+				float dist = (player.transform.position - teleportPoint).magnitude;
+				if (dist < radius)
+					canTeleport = true;
+			}
+
+			if (canTeleport && Input.GetKeyDown(KeyCode.F8))
+				player.transform.position = destinationPoint;
 		}
 
 		public void SetMouseMinY(float mouseMinY)
@@ -391,6 +411,9 @@ namespace SuperliminalPracticeMod
 
 			if (!namesVisible)
 				dynamicInfo += "\nNames Hidden";
+
+			if (canTeleport)
+				dynamicInfo += "\nPress F8 to Teleport";
 
 			String output = "Superliminal Hide and Seek\n\n";
 
