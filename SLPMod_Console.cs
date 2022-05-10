@@ -106,7 +106,7 @@ namespace SuperliminalPracticeMod
 				PracticeModManager.Instance.showMoreInfo = !PracticeModManager.Instance.showMoreInfo;
 			}
 			else if (commandArray[0].ToLower() == "resethidingtime")
-            {
+			{
 				PracticeModManager.Instance.ResetHidingTime();
 			}
 		}
