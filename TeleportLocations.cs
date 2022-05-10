@@ -15,50 +15,50 @@ namespace SuperliminalPracticeMod
 			// 3 - Cubism
 			new object[]
 			{
-				new object[] { new Vector3(-320f, -3.76f, -137.6f), new Vector3(-143.2f, 35.65f, -132f) },
+				new object[] { new Vector3(-320.030f, -3.768f, -137.590f), new Vector3(-141.622f, 35.647f, -132.487f) },
 			},
 			// 4 - Blackout
 			new object[]
 			{
-				new object[] { new Vector3(81.2f, 0f, -100f), new Vector3(115f, 0f, -140.7f) },
-				new object[] { new Vector3(97f, 0f, -140.7f), new Vector3(81.2f, 0f, -100f) },
+				new object[] { new Vector3(113.419f, -0.178f, -140.764f), new Vector3(81.170f, -0.178f, -101.321f) },
+				new object[] { new Vector3(81.170f, -0.178f, -101.321f), new Vector3(113.419f, -0.178f, -140.764f) },
 			},
 			// 5 - Clone
 			new object[]{},
 			// 6 - Dollhouse
 			new object[]
 			{
-				new object[] { new Vector3(-1972.0f, -444.0f, -190.0f), new Vector3(-36.0f, -412.9f, -561.0f) },
+				new object[] { new Vector3(-1269.308f, -11.395f, 1442.407f), new Vector3(667.486f, 20.478f, 1071.159f) },
 			},
 			// 7 - Labyrinth
 			new object[]
 			{
-				new object[] { new Vector3(-1.0f, 0.0f, 0.6f), new Vector3(-288.5f, -112.1f, 431f) },
-				new object[] { new Vector3(-288.5f, -112.1f, 431f), new Vector3(-1.0f, 0.0f, 0.6f) },
-				new object[] { new Vector3(53.7f, -110.6f, 220.0f) , new Vector3(53.2f, -98.6f, 125.3f) },
-				new object[] { new Vector3(53.2f, -98.6f, 125.3f), new Vector3(53.7f, -110.6f, 220.0f) },
-				new object[] { new Vector3(87.7f, -138.7f, 308.5f), new Vector3(116.4f, -136.5f, 310.4f) },
-				new object[] { new Vector3(116.4f, -136.5f, 310.4f), new Vector3(87.7f, -138.7f, 308.5f) },
-				new object[] { new Vector3(239.1f, -141.7f, 313.0f) , new Vector3(141.0f, -133.7f, 302.5f) },
-				new object[] { new Vector3(141.0f, -133.7f, 302.5f), new Vector3(239.1f, -141.7f, 313.0f) },
-				new object[] { new Vector3(385.5f, -141.0f, 155.5f), new Vector3(254.9f, -141.6f, 310.9f) },
-				new object[] { new Vector3(255.0f, -145.7f, 308.0f), new Vector3(385.5f, -141.0f, 155.5f) },
-				new object[] { new Vector3(394.7f, -137.3f, 289.7f), new Vector3(401.5f, -141.0f, 155.7f) },
-				new object[] { new Vector3(401.5f, -141.0f, 155.7f), new Vector3(394.7f, -137.3f, 289.7f) },
-				new object[] { new Vector3(421.2f, -37.0f, 1168.0f), new Vector3(421.0f, -137.3f, 289.5f) },
-				new object[] { new Vector3(421.0f, -137.3f, 289.5f), new Vector3(421.2f, -37.0f, 1168.0f) },
+				new object[] { new Vector3(-45.105f, -15.866f, 236.990f), new Vector3(243.259f, 95.925f, -193.374f) },
+				new object[] { new Vector3(243.259f, 95.925f, -193.374f), new Vector3(-45.105f, -15.866f, 236.990f) },
+				new object[] { new Vector3(296.502f, -2.440f, -68.978f), new Vector3(297.150f, -14.481f, 27.686f) },
+				new object[] { new Vector3(297.150f, -14.481f, 27.686f), new Vector3(296.502f, -2.440f, -68.978f) },
+				new object[] { new Vector3(333.318f, -42.402f, 118.021f), new Vector3(359.914f, -40.295f, 116.453f) },
+				new object[] { new Vector3(359.914f, -40.295f, 116.453f), new Vector3(333.318f, -42.402f, 118.021f) },
+				new object[] { new Vector3(384.667f, -37.559f, 108.211f), new Vector3(482.517f, -45.392f, 119.006f) },
+				new object[] { new Vector3(482.517f, -45.392f, 119.006f), new Vector3(384.667f, -37.559f, 108.211f) },
+				new object[] { new Vector3(498.353f, -49.395f, 114.405f), new Vector3(628.927f, -44.766f, -38.486f) },
+				new object[] { new Vector3(628.927f, -44.766f, -38.486f), new Vector3(498.489f, -45.392f, 116.986f) },
+				new object[] { new Vector3(645.085f, -44.768f, -38.239f), new Vector3(638.325f, -41.118f, 95.586f) },
+				new object[] { new Vector3(638.325f, -41.118f, 95.586f), new Vector3(645.085f, -44.768f, -38.239f) },
+				new object[] { new Vector3(664.254f, -41.118f, 95.485f), new Vector3(661.586f, 58.705f, 974.756f) },
+				new object[] { new Vector3(661.586f, 58.705f, 974.756f), new Vector3(664.254f, -41.118f, 95.485f) },
 			},
 			// 8 - Whitespace
 			new object[]
 			{
-				new object[] { new Vector3(6.5f, 103.0f, -211.4f), new Vector3(-185.7f, -13.4f, 180.9f) },
-				new object[] { new Vector3(-185.7f, -13.4f, 180.9f), new Vector3(6.5f, 103.0f, -211.4f) },
-				new object[] { new Vector3(297.8f, -24.0f, -136.0f), new Vector3(-437.3f, 103.0f, -63.6f) },
-				new object[] { new Vector3(-437.3f, 103.0f, -63.6f), new Vector3(297.8f, -24.0f, -136.0f) },
-				new object[] { new Vector3(-73.0f, -74.5f, -243.1f), new Vector3(-53.8f, -74.5f, -243.2f) },
-				new object[] { new Vector3(-84.6f, -94.5f, -293.7f), new Vector3(-592.0f, 103.0f, -1069.1f) },
-				new object[] { new Vector3(-237.1f, -158.2f, -242.9f), new Vector3(-237.1f, -158.2f, -239.0f) },
-				new object[] { new Vector3(-312.5f, -177.3f, -461.5f), new Vector3(-233.1f, -158.2f, -289.9f) },
+				new object[] { new Vector3(-185.904f, -13.574f, 181.048f), new Vector3(6.510f, 102.959f, -211.390f) },
+				new object[] { new Vector3(6.510f, 102.959f, -211.390f), new Vector3(-185.904f, -13.574f, 181.048f) },
+				new object[] { new Vector3(-440.026f, 102.951f, -47.577f), new Vector3(297.842f, -24.208f, -136.666f) },
+				new object[] { new Vector3(297.842f, -24.208f, -136.666f), new Vector3(-440.026f, 102.951f, -47.577f) },
+				new object[] { new Vector3(-592.214f, 102.959f, -1069.499f), new Vector3(-84.589f, -94.574f, -293.704f) },
+				new object[] { new Vector3(-84.589f, -94.574f, -293.704f), new Vector3(-592.214f, 102.959f, -1069.499f) },
+				new object[] { new Vector3(-233.158f, -158.267f, -289.999f), new Vector3(-312.779f, -177.317f, -462.453f) },
+				new object[] { new Vector3(-312.779f, -177.317f, -462.453f), new Vector3(-233.158f, -158.267f, -289.999f) },
 			},
 		};
 
