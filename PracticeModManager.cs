@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using MelonLoader;
 
 namespace SuperliminalPracticeMod
 {
@@ -44,8 +43,6 @@ namespace SuperliminalPracticeMod
 		object[] teleportLocations;
 		bool canTeleport;
 
-		Vector3? teleportPosition;
-
 
 		void Awake()
 		{
@@ -71,8 +68,6 @@ namespace SuperliminalPracticeMod
 			namesVisible = true;
 			localPlayerGrabbed = false;
 			localPlayerCloned = false;
-
-			teleportPosition = null;
 		}
 
 		private void OnLevelWasLoaded(int level)
@@ -301,43 +296,6 @@ namespace SuperliminalPracticeMod
 
 			if (canTeleport && Input.GetKeyDown(KeyCode.F8))
 				playerMotor.transform.localPosition = teleportDestination;
-
-			if (Input.GetKeyDown(KeyCode.Q))
-			{
-				if (teleportPosition.HasValue)
-				{
-					string vec1 = string.Concat(new object[] {
-						teleportPosition.Value.x.ToString("0.000"), "f, ",
-						teleportPosition.Value.y.ToString("0.000"), "f, ",
-						teleportPosition.Value.z.ToString("0.000"), "f"
-					});
-					string vec2 = string.Concat(new object[] {
-						playerPosition.x.ToString("0.000"), "f, ",
-						playerPosition.y.ToString("0.000"), "f, ",
-						playerPosition.z.ToString("0.000"), "f"
-					});
-					string code = string.Concat(new object[]
-					{
-						"Code for teleporter:\n",
-						"new object[] { new Vector3(",
-						vec1,
-						"), new Vector3(",
-						vec2,
-						") },\n",
-						"new object[] { new Vector3(",
-						vec2,
-						"), new Vector3(",
-						vec1,
-						") },",
-					});
-					MelonLogger.Log(code);
-					teleportPosition = null;
-				}
-				else
-				{
-					teleportPosition = playerPosition;
-				}
-			}
 		}
 
 		public void SetMouseMinY(float mouseMinY)
