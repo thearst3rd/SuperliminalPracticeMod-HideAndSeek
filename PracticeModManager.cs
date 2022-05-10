@@ -35,12 +35,12 @@ namespace SuperliminalPracticeMod
 		List<GameObject> triggerGameObjects;
 
 		bool isHider;
-		float hiderTime;
+		float hidingTime;
 		bool namesVisible;
 		bool localPlayerGrabbed;
 		bool localPlayerCloned;
 
-		int currentLevelIndex;
+		object[] teleportLocations;
 		bool canTeleport;
 
 
@@ -64,7 +64,7 @@ namespace SuperliminalPracticeMod
 			base.gameObject.AddComponent<SLPMod_Console>();
 
 			isHider = false;
-			hiderTime = 0.0f;
+			hidingTime = 0.0f;
 			namesVisible = true;
 			localPlayerGrabbed = false;
 			localPlayerCloned = false;
@@ -77,7 +77,8 @@ namespace SuperliminalPracticeMod
 
 			LevelInfo levelInfo = GameManager.GM.GetComponent<LevelInformation>().LevelInfo;
 
-			currentLevelIndex = levelInfo.GetLevelIndex(levelInfo.GetCurrentSceneSaveName());
+			int currentLevelIndex = levelInfo.GetLevelIndex(levelInfo.GetCurrentSceneSaveName());
+			teleportLocations = TeleportLocations.GetTeleportLocations(currentLevelIndex);
 			canTeleport = false;
 		}
 
@@ -277,22 +278,24 @@ namespace SuperliminalPracticeMod
 				isHider = false;
 
 			if (isHider)
-				hiderTime += Time.deltaTime;
-
-			Vector3 teleportPoint = new Vector3(81.2f, 0, -100);
-			Vector3 destinationPoint = new Vector3(115, 0, -140.7f);
-			float radius = 3.0f;
+				hidingTime += Time.deltaTime;
 
 			canTeleport = false;
-			if (currentLevelIndex == 4)
+			Vector3 playerPosition = playerMotor.transform.localPosition;
+			Vector3 teleportDestination = Vector3.zero;
+			foreach (object[] location in teleportLocations)
 			{
-				float dist = (player.transform.position - teleportPoint).magnitude;
-				if (dist < radius)
+				float dist = (playerPosition - (Vector3)location[0]).magnitude;
+				if (dist < TeleportLocations.RADIUS)
+				{
 					canTeleport = true;
+					teleportDestination = (Vector3)location[1];
+					break;
+				}
 			}
 
 			if (canTeleport && Input.GetKeyDown(KeyCode.F8))
-				player.transform.position = destinationPoint;
+				playerMotor.transform.localPosition = teleportDestination;
 		}
 
 		public void SetMouseMinY(float mouseMinY)
@@ -371,8 +374,8 @@ namespace SuperliminalPracticeMod
 			else
 				hiderInfo += "\nYou are a SEEKER";
 
-			float seconds = hiderTime % 60.0f;
-			int minutes = (int) Math.Floor(hiderTime / 60);
+			float seconds = (float) Math.Floor(10 * (hidingTime % 60.0f)) / 10.0f;
+			int minutes = (int) Math.Floor(hidingTime / 60);
 			hiderInfo += "\nTime spent hiding: ";
 			hiderInfo += minutes.ToString("0") + ":";
 			hiderInfo += seconds.ToString("00.0");
@@ -556,5 +559,9 @@ namespace SuperliminalPracticeMod
 			}
 		}
 
+		public void ResetHidingTime()
+        {
+			hidingTime = 0.0f;
+        }
 	}
 }
