@@ -62,7 +62,7 @@ namespace SuperliminalPracticeMod
 			},
 		};
 
-		public static float RADIUS = 3.0f;
+		public static float RADIUS = 2.0f;
 
 		public static object[] GetTeleportLocations(int levelIndex)
 		{

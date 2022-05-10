@@ -42,6 +42,7 @@ namespace SuperliminalPracticeMod
 
 		object[] teleportLocations;
 		bool canTeleport;
+		List<GameObject> teleportGameObjects;
 
 
 		void Awake()
@@ -80,6 +81,20 @@ namespace SuperliminalPracticeMod
 			int currentLevelIndex = levelInfo.GetLevelIndex(levelInfo.GetCurrentSceneSaveName());
 			teleportLocations = TeleportLocations.GetTeleportLocations(currentLevelIndex);
 			canTeleport = false;
+
+			teleportGameObjects = new List<GameObject>();
+			foreach (object[] teleportLocation in teleportLocations)
+			{
+				GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				gameObject.transform.position = (Vector3)teleportLocation[0];
+				gameObject.transform.localScale = (2 * TeleportLocations.RADIUS) * Vector3.one;
+				gameObject.GetComponent<SphereCollider>().enabled = false;
+				MeshRenderer component = gameObject.GetComponent<MeshRenderer>();
+				component.material.shader = Shader.Find("Transparent/Diffuse");
+				component.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
+
+				teleportGameObjects.Add(gameObject);
+			}
 		}
 
 		public void AddTriggerGO(GameObject go)
