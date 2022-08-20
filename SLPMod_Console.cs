@@ -15,6 +15,9 @@ namespace SuperliminalPracticeMod
 		public static SLPMod_Console instance;
 		public bool active;
 		string input;
+
+		Vector3 teleport1;
+		Vector3 teleport2;
 		
 
 		private void Awake()
@@ -130,6 +133,27 @@ namespace SuperliminalPracticeMod
 					MelonLogger.Log("Expected 1 or 2 args");
 					MelonLogger.Log("Usage: " + commandArray[0] + " [<minutes>] <seconds>");
 				}
+			}
+			// For ease of creating teleport locations
+			else if (commandArray[0].ToLower() == "settl1")
+			{
+				teleport1 = PracticeModManager.Instance.playerMotor.transform.localPosition;
+			}
+			else if (commandArray[0].ToLower() == "settl2")
+			{
+				teleport2 = PracticeModManager.Instance.playerMotor.transform.localPosition;
+			}
+			else if (commandArray[0].ToLower() == "printtl")
+			{
+				string template = "new object[] {{ new Vector3({0:F3}f, {0:F3}f, {0:F3}f), new Vector3({0:F3}f, {0:F3}f, {0:F3}f) }},";
+				string output = "\n";
+				output += string.Format(template,
+						teleport1.x, teleport1.y, teleport1.z,
+						teleport2.x, teleport2.y, teleport2.z) + "\n";
+				output += string.Format(template,
+						teleport2.x, teleport2.y, teleport2.z,
+						teleport1.x, teleport1.y, teleport1.z);
+				MelonLogger.Log(output);
 			}
 		}
 
