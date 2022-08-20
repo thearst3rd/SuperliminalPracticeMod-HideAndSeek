@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,6 +44,8 @@ namespace SuperliminalPracticeMod
 		bool canTeleport;
 		List<GameObject> teleportGameObjects;
 
+		float f7HoldTime;
+
 
 		void Awake()
 		{
@@ -69,6 +71,8 @@ namespace SuperliminalPracticeMod
 			namesVisible = true;
 			localPlayerGrabbed = false;
 			localPlayerCloned = false;
+
+			f7HoldTime = 0.0f;
 		}
 
 		private void OnLevelWasLoaded(int level)
@@ -250,6 +254,17 @@ namespace SuperliminalPracticeMod
 
 			if (Input.GetKeyDown(KeyCode.F7))
 				isHider = !isHider;
+
+			if (Input.GetKey(KeyCode.F7))
+			{
+				f7HoldTime += Time.deltaTime;
+				if (f7HoldTime > 3.0f)
+					ResetHidingTime();
+			}
+			else
+			{
+				f7HoldTime = 0.0f;
+			}
 
 			if(Input.GetKeyDown(KeyCode.F9))
 			{
@@ -576,6 +591,7 @@ namespace SuperliminalPracticeMod
 
 		public void ResetHidingTime()
 		{
+			isHider = false;
 			hidingTime = 0.0f;
 		}
 	}
