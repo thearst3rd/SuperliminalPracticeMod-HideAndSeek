@@ -1,4 +1,4 @@
-﻿using Rewired;
+using Rewired;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,31 +59,31 @@ namespace SuperliminalPracticeMod
 		{
 			MelonLogger.Log("Trying to parse \"" + command + "\"");
 			string[] commandArray = command.Split(' ');
-			if(commandArray[0].ToLower() == "teleport" && commandArray.Length >= 4)
+			if (commandArray[0].ToLower() == "teleport" && commandArray.Length >= 4)
 			{
 				float x, y, z;
 				if (!float.TryParse(commandArray[1], out x) || !float.TryParse(commandArray[2], out y) || !float.TryParse(commandArray[3], out z))
 					return;
-				MelonLogger.Log("Trying to teleport to "+x+", "+y+", "+z);
+				MelonLogger.Log("Trying to teleport to " + x + ", " + y + ", " + z);
 				PracticeModManager.Instance.Teleport(new Vector3(x, y, z));
 			}
-			else if(commandArray[0].ToLower() == "scale" && commandArray.Length >= 2)
+			else if (commandArray[0].ToLower() == "scale" && commandArray.Length >= 2)
 			{
 				float newScale;
 				if (float.TryParse(commandArray[1], out newScale))
 					PracticeModManager.Instance.Scale(Math.Abs(newScale));
 			}
-			else if(commandArray[0].ToLower() == "load" && commandArray.Length >= 2)
+			else if (commandArray[0].ToLower() == "load" && commandArray.Length >= 2)
 			{
 				int sceneIndex;
 				if (!int.TryParse(commandArray[1], out sceneIndex))
 					return;
-				if(sceneIndex >= 0)
+				if (sceneIndex >= 0)
 				{
 					SceneManager.LoadScene(sceneIndex % SceneManager.sceneCountInBuildSettings);
 				}
 			}
-			else if(commandArray[0].ToLower() == "noclip")
+			else if (commandArray[0].ToLower() == "noclip")
 			{
 				PracticeModManager.Instance.noClip = !PracticeModManager.Instance.noClip;
 			}
