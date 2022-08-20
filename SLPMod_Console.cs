@@ -1,4 +1,4 @@
-using Rewired;
+﻿using Rewired;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,6 +108,28 @@ namespace SuperliminalPracticeMod
 			else if (commandArray[0].ToLower() == "resethidingtime")
 			{
 				PracticeModManager.Instance.ResetHidingTime();
+			}
+			else if (commandArray[0].ToLower() == "sethidingtime")
+			{
+				if (commandArray.Length == 2)
+				{
+					float seconds = float.Parse(commandArray[1]);
+					PracticeModManager.Instance.SetHidingTime(seconds);
+				}
+				else if (commandArray.Length == 3)
+				{
+					int minutes = int.Parse(commandArray[1]);
+					float seconds = float.Parse(commandArray[2]);
+					if (minutes < 0)
+						seconds = -seconds;
+					seconds += 60 * minutes;
+					PracticeModManager.Instance.SetHidingTime(seconds);
+				}
+				else
+				{
+					MelonLogger.Log("Expected 1 or 2 args");
+					MelonLogger.Log("Usage: " + commandArray[0] + " [<minutes>] <seconds>");
+				}
 			}
 		}
 

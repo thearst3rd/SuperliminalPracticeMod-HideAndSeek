@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -404,11 +404,21 @@ namespace SuperliminalPracticeMod
 			else
 				hiderInfo += "\nYou are a SEEKER";
 
-			float seconds = (float) Math.Floor(10 * (hidingTime % 60.0f)) / 10.0f;
-			int minutes = (int) Math.Floor(hidingTime / 60);
 			hiderInfo += "\nTime spent hiding: ";
-			hiderInfo += minutes.ToString("0") + ":";
-			hiderInfo += seconds.ToString("00.0");
+			if (hidingTime < 0)
+			{
+				float seconds = Math.Abs((float)Math.Ceiling(10 * (hidingTime % 60.0f)) / 10.0f);
+				int minutes = Math.Abs((int)Math.Ceiling(hidingTime / 60));
+				hiderInfo += "-" + minutes.ToString("0") + ":";
+				hiderInfo += seconds.ToString("00.0");
+			}
+			else
+			{
+				float seconds = (float)Math.Floor(10 * (hidingTime % 60.0f)) / 10.0f;
+				int minutes = (int)Math.Floor(hidingTime / 60);
+				hiderInfo += minutes.ToString("0") + ":";
+				hiderInfo += seconds.ToString("00.0");
+			}
 
 			if (localPlayerGrabbed || localPlayerCloned)
 			{
@@ -593,6 +603,11 @@ namespace SuperliminalPracticeMod
 		{
 			isHider = false;
 			hidingTime = 0.0f;
+		}
+
+		public void SetHidingTime(float newHidingTime)
+		{
+			hidingTime = newHidingTime;
 		}
 	}
 }
