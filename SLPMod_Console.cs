@@ -142,14 +142,12 @@ namespace SuperliminalPracticeMod
 			else if (commandArray[0].ToLower() == "settl2")
 			{
 				teleport2 = PracticeModManager.Instance.playerMotor.transform.localPosition;
-			}
-			else if (commandArray[0].ToLower() == "printtl")
-			{
-				string template = "new object[] {{ new Vector3({0:F3}f, {0:F3}f, {0:F3}f), new Vector3({0:F3}f, {0:F3}f, {0:F3}f) }},";
-				string output = "\n";
+
+				string template = "\nnew object[] {{ new Vector3({0:F3}f, {1:F3}f, {2:F3}f), new Vector3({3:F3}f, {4:F3}f, {5:F3}f) }},";
+				string output = "";
 				output += string.Format(template,
 						teleport1.x, teleport1.y, teleport1.z,
-						teleport2.x, teleport2.y, teleport2.z) + "\n";
+						teleport2.x, teleport2.y, teleport2.z);
 				output += string.Format(template,
 						teleport2.x, teleport2.y, teleport2.z,
 						teleport1.x, teleport1.y, teleport1.z);
