@@ -315,7 +315,7 @@ namespace SuperliminalPracticeMod
 				hidingTime += Time.deltaTime;
 
 			canTeleport = false;
-			Vector3 playerPosition = playerMotor.transform.localPosition;
+			Vector3 playerPosition = playerMotor.transform.position;
 			Vector3 teleportDestination = Vector3.zero;
 			foreach (object[] location in teleportLocations)
 			{
@@ -329,7 +329,7 @@ namespace SuperliminalPracticeMod
 			}
 
 			if (canTeleport && Input.GetKeyDown(KeyCode.F8))
-				playerMotor.transform.localPosition = teleportDestination;
+				playerMotor.transform.position = teleportDestination;
 		}
 
 		public void SetMouseMinY(float mouseMinY)
