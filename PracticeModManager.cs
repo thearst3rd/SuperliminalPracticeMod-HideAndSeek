@@ -20,11 +20,13 @@ namespace SuperliminalPracticeMod
 		public Text playerText;
 		public Text grabbedObjectText;
 		public PauseMenu pauseMenu;
+		public MouseLook mouseLook;
 
 		public bool showMoreInfo;
 
 		Vector3 storedPosition;
-		Quaternion storedRotation;
+		Quaternion storedCapsuleRotation;
+		float storedCameraRotation;
 		float storedScale;
 		int storedMap;
 		float storeTime;
@@ -58,7 +60,8 @@ namespace SuperliminalPracticeMod
 			showMoreInfo = false;
 
 			storedPosition = Vector3.zero;
-			storedRotation = Quaternion.identity;
+			storedCapsuleRotation = Quaternion.identity;
+			storedCameraRotation = 0;
 			storedScale = 1.0f;
 			storedMap = -1;
 			GameManager.GM.enableDebugFunctions = true;
@@ -142,6 +145,7 @@ namespace SuperliminalPracticeMod
 				player = GameManager.GM.player;
 				playerMotor = player.GetComponent<CharacterMotor>();
 				playerCamera = player.GetComponentInChildren<Camera>();
+				mouseLook = playerCamera.GetComponent<MouseLook>();
 				resizeScript = playerCamera.GetComponent<ResizeScript>();
 				pauseMenu = GameObject.Find("UI_PAUSE_MENU").GetComponentInChildren<PauseMenu>(true);
 				defaultFarClipPlane = playerCamera.farClipPlane;
@@ -392,9 +396,9 @@ namespace SuperliminalPracticeMod
 
 		string GetPlayerTextString()
 		{
-			Vector3 position = playerMotor.transform.localPosition;
+			Vector3 position = playerMotor.transform.position;
 			Vector3 velocity = playerMotor.GetComponent<CharacterController>().velocity;
-			Vector3 rotation = playerMotor.transform.localRotation.eulerAngles;
+			Vector3 rotation = playerMotor.transform.rotation.eulerAngles;
 			float scale = playerMotor.transform.localScale.x;
 
 			string hiderInfo = "";
@@ -551,7 +555,8 @@ namespace SuperliminalPracticeMod
 		void StorePosition()
 		{
 			storedPosition = playerMotor.transform.position;
-			storedRotation = playerMotor.transform.rotation;
+			storedCapsuleRotation = playerMotor.transform.rotation;
+			storedCameraRotation = mouseLook.rotationY;
 			storedScale = playerMotor.transform.localScale.x;
 			storedMap = SceneManager.GetActiveScene().buildIndex;
 			storeTime = Time.time;
@@ -562,7 +567,8 @@ namespace SuperliminalPracticeMod
 			if(storedMap == SceneManager.GetActiveScene().buildIndex)
 			{
 				playerMotor.transform.position = storedPosition;
-				playerMotor.transform.rotation = storedRotation;
+				playerMotor.transform.rotation = storedCapsuleRotation;
+				mouseLook.SetRotationY(storedCameraRotation);
 				Scale(storedScale);
 				teleportTime = Time.time;
 			}
