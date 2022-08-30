@@ -328,7 +328,7 @@ namespace SuperliminalPracticeMod
 				}
 			}
 
-			if (canTeleport && Input.GetKeyDown(KeyCode.F8))
+			if (canTeleport && Input.GetKeyDown(KeyCode.T))
 				playerMotor.transform.position = teleportDestination;
 		}
 
@@ -460,7 +460,7 @@ namespace SuperliminalPracticeMod
 				dynamicInfo += "\nNames Hidden";
 
 			if (canTeleport)
-				dynamicInfo += "\nPress F8 to Teleport";
+				dynamicInfo += "\nPress T to Teleport";
 
 			String output = "Superliminal Hide and Seek\n\n";
 
