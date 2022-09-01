@@ -43,7 +43,7 @@ namespace SuperliminalPracticeMod
 		bool localPlayerGrabbed;
 		bool localPlayerCloned;
 
-		object[] teleportLocations;
+		TeleportLocation[] teleportLocations;
 		bool canTeleport;
 		List<GameObject> teleportGameObjects;
 
@@ -91,11 +91,11 @@ namespace SuperliminalPracticeMod
 			canTeleport = false;
 
 			teleportGameObjects = new List<GameObject>();
-			foreach (object[] teleportLocation in teleportLocations)
+			foreach (TeleportLocation location in teleportLocations)
 			{
 				GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-				gameObject.transform.position = (Vector3)teleportLocation[0];
-				gameObject.transform.localScale = (2 * TeleportLocations.RADIUS) * Vector3.one;
+				gameObject.transform.position = location.fromPosition;
+				gameObject.transform.localScale = 2 * location.radius * Vector3.one;
 				gameObject.GetComponent<SphereCollider>().enabled = false;
 				MeshRenderer component = gameObject.GetComponent<MeshRenderer>();
 				component.material.shader = Shader.Find("Transparent/Diffuse");
@@ -319,13 +319,13 @@ namespace SuperliminalPracticeMod
 			canTeleport = false;
 			Vector3 playerPosition = playerMotor.transform.position;
 			Vector3 teleportDestination = Vector3.zero;
-			foreach (object[] location in teleportLocations)
+			foreach (TeleportLocation location in teleportLocations)
 			{
-				float dist = (playerPosition - (Vector3)location[0]).magnitude;
-				if (dist < TeleportLocations.RADIUS)
+				float dist = (playerPosition - location.fromPosition).magnitude;
+				if (dist < location.radius)
 				{
 					canTeleport = true;
-					teleportDestination = (Vector3)location[1];
+					teleportDestination = location.toPosition;
 					break;
 				}
 			}

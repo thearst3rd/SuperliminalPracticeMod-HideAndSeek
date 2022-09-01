@@ -137,13 +137,13 @@ namespace SuperliminalPracticeMod
 			// For ease of creating teleport locations
 			else if (commandArray[0].ToLower() == "settl1")
 			{
-				teleport1 = PracticeModManager.Instance.playerMotor.transform.localPosition;
+				teleport1 = PracticeModManager.Instance.playerMotor.transform.position;
 			}
 			else if (commandArray[0].ToLower() == "settl2")
 			{
-				teleport2 = PracticeModManager.Instance.playerMotor.transform.localPosition;
+				teleport2 = PracticeModManager.Instance.playerMotor.transform.position;
 
-				string template = "\nnew object[] {{ new Vector3({0:F3}f, {1:F3}f, {2:F3}f), new Vector3({3:F3}f, {4:F3}f, {5:F3}f) }},";
+				string template = "\nnew TeleportLocation(new Vector3({0:F3}f, {1:F3}f, {2:F3}f), new Vector3({3:F3}f, {4:F3}f, {5:F3}f)),";
 				string output = "";
 				output += string.Format(template,
 						teleport1.x, teleport1.y, teleport1.z,
