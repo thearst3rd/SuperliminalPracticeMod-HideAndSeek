@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SuperliminalPracticeMod
 {
@@ -89,6 +89,7 @@ namespace SuperliminalPracticeMod
 				new TeleportLocation(new Vector3(284.779f, 93.590f, -124.041f), new Vector3(198.620f, 137.802f, -131.359f)),
 				new TeleportLocation(new Vector3(296.565f, -2.440f, -76.796f), new Vector3(296.730f, 90.925f, -77.032f)),
 				new TeleportLocation(new Vector3(324.787f, -42.402f, 108.443f), new Vector3(322.035f, -9.074f, 109.398f)),
+				new TeleportLocation(new Vector3(663.669f, -41.295f, 975.229f), new Vector3(661.557f, 58.705f, 974.541f)),
 			},
 			// 8 - Whitespace
 			new TeleportLocation[]
